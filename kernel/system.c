@@ -1,3 +1,11 @@
+#include "system.h"
+
+size_t strlen(const char* str)
+{
+	size_t ret;
+	for (ret = 0; str[ret] != 0; ret++);
+	return ret;
+}
 
 //TODO: Port this into the kernel_entry.asm file
 // This should all be extern

@@ -1,6 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
-#include "stdlibs.h"
+#include "system.h"
 
 #define VIDEO_MEMORY_LOCATION 0xB8000
 #define VGA_WIDTH 80 // Terminal can have 80 chars

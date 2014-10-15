@@ -1,6 +1,6 @@
 
 #include "terminal.h"
-#include "native.h"
+#include "system.h"
 
 void init_terminal()
 {

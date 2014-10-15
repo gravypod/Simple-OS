@@ -1,3 +1,2 @@
 kernel.bin
-kernel_entry.o
-
+build/
