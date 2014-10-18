@@ -1,5 +1,6 @@
-#include <stddef.h>
-#include <stdint.h>
+#ifndef __TERMINAL_H
+#define __TERMINAL_H 1
+
 #include "system.h"
 
 #define VIDEO_MEMORY_LOCATION 0xB8000
@@ -33,7 +34,7 @@ enum terminal_color
  * Terminal struct that holds all of the info about the terminal's state
  */
 struct vga_terminal {
-	size_t row, column;
+	uint8_t row, column;
 	uint8_t color;
 	uint16_t* buffer;
 } terminal;
@@ -47,7 +48,7 @@ void init_terminal();
  * c - character used
  * color - Color of the VGA entry
  */
-uint16_t make_colored_vga_entry(char c, unsigned char color);
+uint16_t make_colored_vga_entry(char c, uint8_t color);
 /**
  * Make a VGA entry
  * 2 bytes of data that contains the string & color of text
@@ -59,15 +60,15 @@ uint16_t make_vga_entry(char c);
  * row - x pos on screen
  * column - y pos on screen
  */
-size_t get_screen_index(size_t row, size_t column);
+uint16_t get_screen_index(uint8_t row, uint8_t column);
 /**
  * The current index of the screen buffer
  */
-size_t get_current_screen_index();
+uint16_t get_current_screen_index();
 /**
  * Make a color that can be sent to the VGA adapter
  */
-unsigned char make_terminal_color(enum terminal_color fg, enum terminal_color bg);
+uint8_t make_terminal_color(enum terminal_color fg, enum terminal_color bg);
 /**
  * Write a character to the VGA adapter
  */
@@ -83,10 +84,12 @@ void terminal_putstring(const char* data);
  * c - character to write
  * color - color of the text, see make_terminal_color
  */
-void terminal_colored_putchar(char c, unsigned char color);
+void terminal_colored_putchar(char c, uint8_t color);
 /**
  * Write a string to the VGA adapter
  * data - string
  * color - color of the text, see make_terminal_color
  */
-void terminal_colored_putstring(const char* data, unsigned char color);
+void terminal_colored_putstring(const char* data, uint8_t color);
+
+#endif

@@ -9,9 +9,9 @@ void init_terminal()
 	terminal.buffer = (uint16_t*) VIDEO_MEMORY_LOCATION;
 	terminal.color = make_terminal_color(WHITE, BLACK);
 
-	for (size_t y = 0; y < VGA_HEIGHT; y++)
+	for (uint8_t y = 0; y < VGA_HEIGHT; y++)
 	{
-		for (size_t x = 0; x < VGA_WIDTH; x++)
+		for (uint8_t x = 0; x < VGA_WIDTH; x++)
 		{
 			terminal.buffer[get_screen_index(x, y)] = make_vga_entry(' ');
 		}
@@ -19,7 +19,7 @@ void init_terminal()
 
 }
 
-uint16_t make_colored_vga_entry(char c, unsigned char color)
+uint16_t make_colored_vga_entry(char c, uint8_t color)
 {
 	return ((uint16_t)c) | ((uint16_t) color) << 8;
 }
@@ -29,23 +29,23 @@ uint16_t make_vga_entry(char c)
 	return make_colored_vga_entry(c, terminal.color);
 }
 
-size_t get_screen_index(size_t column, size_t row)
+uint16_t get_screen_index(uint8_t column, uint8_t row)
 {
-	const size_t index = row * VGA_WIDTH + column;
+	const uint16_t index = row * VGA_WIDTH + column;
 	return index;
 }
 
-size_t get_current_screen_index()
+uint16_t get_current_screen_index()
 {
 	return get_screen_index(terminal.column, terminal.row);
 }
 
-unsigned char make_terminal_color(enum terminal_color fg, enum terminal_color bg)
+uint8_t make_terminal_color(enum terminal_color fg, enum terminal_color bg)
 {
 	return fg | bg << 4;
 }
 
-void terminal_colored_putchar(char c, unsigned char color)
+void terminal_colored_putchar(char c, uint8_t color)
 {
 
 	if (c == '\n')
@@ -68,9 +68,9 @@ void terminal_colored_putchar(char c, unsigned char color)
 
 }
 
-void terminal_colored_putstring(const char* data, unsigned char color)
+void terminal_colored_putstring(const char* data, uint8_t color)
 {
-	for (size_t i = 0; i < strlen(data); i++)
+	for (int i = 0; i < strlen(data); i++)
 	{
 		terminal_colored_putchar(data[i], color);
 	}

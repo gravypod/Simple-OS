@@ -14,10 +14,10 @@
 
 	function target_compile() // Compile target, compiles any updated files, links if changes are made
 	{
-		compile_all(KERNEL_DIR, "c", true, "gcc", "-Iincludes/ -m32 -std=c99 -ffreestanding -c");
+		compile_all(KERNEL_DIR, "c", true, "gcc", "-std=c99 -ffreestanding -nostdlib -static -nostdinc -fno-stack-protector -I includes -m32 -c");
 		compile_all(KERNEL_DIR, "asm", true, "nasm", "-f elf");
 		
-		link_all("ld", "kernel.bin", "--oformat=elf32-i386 -m elf_i386 -Ttext 0x1000");
+		link_all("ld", "kernel.bin", "-m elf_i386 -T link.ld");
 	}
 	
 	function target_run() // Attempts to run the kernel in the VM
