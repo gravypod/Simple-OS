@@ -1,11 +1,16 @@
 #ifndef __SYSTEM_H
 #define __SYSTEM_H 1
 
+#define KERNEL_SEGMENT 0x8
+#define GDT_SEGMENT    0x10
 
+typedef unsigned long uint64_t;
 typedef unsigned int uint32_t;
 typedef unsigned short uint16_t;
 typedef unsigned char uint8_t;
 
+
+typedef long int64_t;
 typedef int int32_t;
 typedef short int16_t;
 typedef char int8_t;
@@ -44,5 +49,10 @@ uint16_t read_word(uint16_t port);
  * Write a word to a port
  */
 void write_word(uint16_t port, uint16_t data);
+
+/**
+ * Hault the kernel forever!
+ */
+extern void hang();
 
 #endif

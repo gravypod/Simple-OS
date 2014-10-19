@@ -1,4 +1,5 @@
 #include "gdt.h"
+#include "system.h"
 
 struct gdt_entry
 {
@@ -22,7 +23,7 @@ struct gdt_pointer gp;
 // Code from http://www.osdever.net/bkerndev/Docs/gdt.htm
 
 /* Setup a descriptor in the Global Descriptor Table */
-void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran)
+void gdt_set_gate(uint8_t num, uint64_t base, uint64_t limit, uint8_t access, uint8_t gran)
 {
     /* Setup the descriptor base address */
     gdt[num].base_low = (base & 0xFFFF);
@@ -47,7 +48,7 @@ void init_gdt()
 {
     /* Setup the GDT pointer and limit */
     gp.limit = (sizeof(struct gdt_entry) * 3) - 1;
-    gp.base = &gdt;
+    gp.base = (uint32_t) &gdt;
 
     /* Our NULL descriptor */
     gdt_set_gate(0, 0, 0, 0, 0);

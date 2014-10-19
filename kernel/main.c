@@ -2,11 +2,13 @@
 #include "terminal.h"
 #include "gdt.h"
 #include "idt.h"
+#include "isr.h"
 
 void init()
 {
 	init_gdt();
 	init_idt();
+	init_isr();
 	init_terminal();
 }
 

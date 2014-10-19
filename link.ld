@@ -3,7 +3,9 @@ SECTIONS
 {
   . = 0x10000;
   .text : {
+    *(.multiboot)
     *(.text);
+    *(.bootstrap_stack)
   }
   .data : {
     *(.data)
@@ -11,5 +13,4 @@ SECTIONS
   .bss : {
     *(.bss)
   }
-  end = .;
 }

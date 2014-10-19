@@ -6,6 +6,9 @@
 #define VIDEO_MEMORY_LOCATION 0xB8000
 #define VGA_WIDTH 80 // Terminal can have 80 chars
 #define VGA_HEIGHT 25 // by 25... I assume
+#define CRT_SIG 0x3D4
+#define CRT_DATA 0x3D5
+
 
 /**
  * Colors of the terminal
@@ -65,6 +68,22 @@ uint16_t get_screen_index(uint8_t row, uint8_t column);
  * The current index of the screen buffer
  */
 uint16_t get_current_screen_index();
+/**
+ * Set the cursor to a screen index
+ * location - Location in video memory for the cursor.
+ *            Use get_screen_index to make this value
+ */
+void set_cursor(uint16_t location);
+/**
+ * Set the cursor's location to a column and row.
+ * column - The column in the VGA table
+ * row    - The row in the VGA table
+ */
+void set_cursor_col(uint8_t column, uint8_t row);
+/**
+ * Update the cursor's location to where it should be on the screen.
+ */
+void update_cursor();
 /**
  * Make a color that can be sent to the VGA adapter
  */

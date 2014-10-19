@@ -40,6 +40,25 @@ uint16_t get_current_screen_index()
 	return get_screen_index(terminal.column, terminal.row);
 }
 
+void set_cursor(uint16_t location)
+{
+	write_byte(CRT_SIG, 14);
+	write_byte(CRT_DATA, location >> 8); // High byte
+
+	write_byte(CRT_SIG, 15);
+	write_byte(CRT_DATA, location); // Low byte
+}
+
+void set_cursor_col(uint8_t column, uint8_t row)
+{
+	set_cursor(get_screen_index(column, row));
+}
+
+void update_cursor()
+{
+	set_cursor(get_current_screen_index());
+}
+
 uint8_t make_terminal_color(enum terminal_color fg, enum terminal_color bg)
 {
 	return fg | bg << 4;
@@ -50,22 +69,29 @@ void terminal_colored_putchar(char c, uint8_t color)
 
 	if (c == '\n')
 	{
+		
 		++terminal.row;
 		terminal.column = 0;
-		return;
-	}
 
-	terminal.buffer[get_current_screen_index()] = make_colored_vga_entry(c, color);
-
-	if (++terminal.column == VGA_WIDTH)
-	{
-		terminal.column = 0;
-		if (++terminal.row == VGA_HEIGHT)
+	} else {
+		
+		terminal.buffer[get_current_screen_index()] = make_colored_vga_entry(c, color);
+		
+		if (++terminal.column == VGA_WIDTH)
 		{
-			terminal.row = 0;
+			
+			terminal.column = 0;
+			
+			if (++terminal.row == VGA_HEIGHT)
+			{
+				terminal.row = 0;
+			}
+
 		}
+
 	}
 
+	update_cursor();
 }
 
 void terminal_colored_putstring(const char* data, uint8_t color)

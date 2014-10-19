@@ -12,21 +12,21 @@ align 4
 
 section .bootstrap_stack
 align 4
-stack_bottom:
-times 16384 db 0
-stack_top:
+	stack_bottom:
+	times 16384 db 0
+	stack_top:
 
 section .text
-global _start
-_start:
-
-	mov esp, stack_top
-
-	extern kernel_main
-	call kernel_main
-
-	cli
-
-.hang:
-	hlt
-	jmp .hang
+	global _start
+	global hang
+	_start:
+		
+		mov esp, stack_top
+	
+		extern kernel_main
+		call kernel_main
+		
+	hang:
+		cli
+		hlt
+		jmp $
