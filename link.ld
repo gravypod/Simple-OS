@@ -13,4 +13,5 @@ SECTIONS
   .bss : {
     *(.bss)
   }
+  end = .;
 }
