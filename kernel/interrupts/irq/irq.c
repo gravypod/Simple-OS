@@ -74,13 +74,9 @@ void irq_handler(struct interrupt_event *event)
 {
 	irq_function handler = irq_get_handler(event->int_no - 32);
 
-	if (handler)
+	if (handler != 0)
 	{
 		handler(event);
-	}
-	else
-	{
-		terminal_putstring("No handler for event\n");
 	}
 
 	if (event->int_no >= 40) // This was an IRQ8 to IRQ14

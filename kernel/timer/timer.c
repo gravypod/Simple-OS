@@ -18,15 +18,11 @@ void set_frequency(int hz)
 
 void time_handler(struct interrupt_event *event)
 {
-	ticks++;
-	if (ticks % 999 == 0)
-	{
-		terminal_putstring("One second passed!\n");
-	}
+	ticks++; // TODO: Handle processes
 }
 
 void init_timer()
 {
 	set_frequency(CPU_HZ); 
-	irq_register(0, time_handler);
+	irq_install(0, time_handler);
 }

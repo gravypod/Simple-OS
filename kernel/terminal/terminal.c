@@ -71,7 +71,7 @@ void terminal_colored_putchar(char c, uint8_t color)
 
 	switch (c)
 	{
-		case '\b': // Backspace
+	/*	case '\b': // Backspace TODO: Implement better terminall class... apperentlly
 			if (terminal.column == 0)
 			{
 				terminal.row--;
@@ -79,10 +79,10 @@ void terminal_colored_putchar(char c, uint8_t color)
 			} 
 			else 
 			{
-				terminal.column--;
+				terminal.column -= 2;
 			}
 			terminal_colored_putchar(' ', color);
-			break;
+			break;*/
 		case '\n': // 
 			++terminal.row;
 			terminal.column = 0;

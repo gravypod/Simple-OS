@@ -65,5 +65,5 @@ void keyboard_handler(struct interrupt_event *event)
 
 void init_keyboard()
 {
-	irq_register(1, keyboard_handler);
+	irq_install(1, keyboard_handler);
 }

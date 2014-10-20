@@ -55,11 +55,8 @@ void init_idt()
     /* Clear out the entire IDT, initializing it to zeros */
     memset(&idt, 0, sizeof(struct idt_entry) * 256);
 
-    init_isr();
-    init_irq();
-    init_timer();
-    init_keyboard();
 
     /* Points the processor's internal register to the new IDT */
     idt_load();
+
 }

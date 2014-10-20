@@ -2,14 +2,22 @@
 #include "terminal.h"
 #include "gdt.h"
 #include "interrupts/idt.h"
+#include "interrupts/isr.h"
+#include "interrupts/irq.h"
+#include "timer/timer.h"
+#include "keyboard/keyboard.h"
+
 
 void kernel_main()
 {
-	init_gdt();
 	init_terminal();
+	init_gdt();
 	init_idt();
-	
-    __asm__ __volatile__ ("sti");
+    init_isr();
+    init_irq();
+    init_timer();
+	init_keyboard();
 
-	hang(); // Hang the system!
+    enable_interupts();
+
 }
