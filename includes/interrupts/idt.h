@@ -3,6 +3,20 @@
 
 #include "system.h"
 
+#define INTERRUPT_FLAG 0x8E
+
+/*
+ * Fired whenever an inturrupt handler is called
+ */
+struct interrupt_event
+{
+	uint32_t gs, fs, es, ds; // pushed the last seg
+	uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax; // Pushed by pusha
+	uint32_t int_no, err_code; // push byte #, our IDT table
+	uint32_t eip, cs, eflags, useresp, ss; // Pushed by processor automatically
+};
+
+
 /** [ ASM ]
  * Initialize the IDT structure in assembly 
  */

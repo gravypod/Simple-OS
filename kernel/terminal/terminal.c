@@ -17,6 +17,8 @@ void init_terminal()
 		}
 	}
 
+	update_cursor();
+
 }
 
 uint16_t make_colored_vga_entry(char c, uint8_t color)
@@ -67,28 +69,39 @@ uint8_t make_terminal_color(enum terminal_color fg, enum terminal_color bg)
 void terminal_colored_putchar(char c, uint8_t color)
 {
 
-	if (c == '\n')
+	switch (c)
 	{
-		
-		++terminal.row;
-		terminal.column = 0;
-
-	} else {
-		
-		terminal.buffer[get_current_screen_index()] = make_colored_vga_entry(c, color);
-		
-		if (++terminal.column == VGA_WIDTH)
-		{
-			
-			terminal.column = 0;
-			
-			if (++terminal.row == VGA_HEIGHT)
+		case '\b': // Backspace
+			if (terminal.column == 0)
 			{
-				terminal.row = 0;
+				terminal.row--;
+				terminal.column = VGA_WIDTH;
+			} 
+			else 
+			{
+				terminal.column--;
 			}
-
-		}
-
+			terminal_colored_putchar(' ', color);
+			break;
+		case '\n': // 
+			++terminal.row;
+			terminal.column = 0;
+			break;
+		default:
+			terminal.buffer[get_current_screen_index()] = make_colored_vga_entry(c, color);
+			
+			if (++terminal.column == VGA_WIDTH)
+			{
+				
+				terminal.column = 0;
+				
+				if (++terminal.row == VGA_HEIGHT)
+				{
+					terminal.row = 0;
+				}
+				
+			}
+			break;
 	}
 
 	update_cursor();

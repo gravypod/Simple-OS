@@ -15,6 +15,7 @@ typedef int int32_t;
 typedef short int16_t;
 typedef char int8_t;
 
+typedef int (*callback_t)();
 
 
 /**
@@ -54,5 +55,10 @@ void write_word(uint16_t port, uint16_t data);
  * Hault the kernel forever!
  */
 extern void hang();
+
+/**
+ * Run the "sti" instruction
+ */
+extern void enable_interupts();
 
 #endif

@@ -1,4 +1,8 @@
-#include "idt.h"
+#include "interrupts/idt.h"
+#include "interrupts/isr.h"
+#include "interrupts/irq.h"
+#include "timer/timer.h"
+#include "keyboard/keyboard.h"
 #include "system.h"
 
 /* Defines an IDT entry */
@@ -51,7 +55,10 @@ void init_idt()
     /* Clear out the entire IDT, initializing it to zeros */
     memset(&idt, 0, sizeof(struct idt_entry) * 256);
 
-    /* Add any new ISRs to the IDT here using idt_set_gate */
+    init_isr();
+    init_irq();
+    init_timer();
+    init_keyboard();
 
     /* Points the processor's internal register to the new IDT */
     idt_load();

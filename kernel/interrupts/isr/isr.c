@@ -1,7 +1,7 @@
 #include "system.h"
-#include "isr.h"
-#include "isr_routines.h"
-#include "idt.h"
+#include "interrupts/isr.h"
+#include "interrupts/isr_routines.h"
+#include "interrupts/idt.h"
 #include "terminal.h"
 
 unsigned char *error_messages[] = 
@@ -40,7 +40,7 @@ unsigned char *error_messages[] =
 	"Reserved Exceptions"
 };
 
-void isr_handler(struct isr_error *error)
+void isr_handler(struct interrupt_event *error)
 {
 	if (error->int_no < 32)
 	{
@@ -54,7 +54,7 @@ void isr_handler(struct isr_error *error)
 
 void isr_register(uint8_t num, uint64_t base) 
 {
-	idt_set_gate(num, base, KERNEL_SEGMENT, ISR_FLAG);
+	idt_set_gate(num, base, KERNEL_SEGMENT, INTERRUPT_FLAG);
 }
 
 
