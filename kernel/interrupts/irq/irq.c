@@ -5,7 +5,7 @@
 #include "system.h"
 #include "terminal.h"
 
-irq_function *irq_routines[16] =
+irq_function irqs[16] =
 {
 	0, 0, 0, 0,
 	0, 0, 0, 0,
@@ -15,12 +15,12 @@ irq_function *irq_routines[16] =
 
 void irq_install(int irq, irq_function handler)
 {
-	irq_routines[irq] = handler;
+	irqs[irq] = handler;
 }
 
 void irq_uninstall(int irq)
 {
-	irq_routines[irq] = 0;
+	irqs[irq] = 0;
 }
 
 void irq_remap()
@@ -65,9 +65,9 @@ void init_irq()
 	
 }
 
-irq_function* irq_get_handler(int irq)
+irq_function irq_get_handler(int irq)
 {
-	return irq_routines[irq];
+	return irqs[irq];
 }
 
 void irq_handler(struct interrupt_event *event)
