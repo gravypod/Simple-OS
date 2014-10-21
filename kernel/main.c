@@ -18,6 +18,6 @@ void kernel_main()
     init_timer();
 	init_keyboard();
 
-    enable_interupts();
+    enable_interrupts();
 
 }

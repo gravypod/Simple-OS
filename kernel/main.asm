@@ -34,7 +34,7 @@ section .text
 		jmp $
 
 
-	global enable_interupts
-	enable_interupts:
+	global enable_interrupts
+	enable_interrupts:
 		sti
 		ret

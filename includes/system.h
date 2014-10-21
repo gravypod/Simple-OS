@@ -59,6 +59,6 @@ extern void hang();
 /**
  * Run the "sti" instruction
  */
-extern void enable_interupts();
+extern void enable_interrupts();
 
 #endif
