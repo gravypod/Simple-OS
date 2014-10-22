@@ -5,6 +5,8 @@
 
 #define INTERRUPT_FLAG 0x8E
 
+
+
 /*
  * Fired whenever an inturrupt handler is called
  */
@@ -15,6 +17,9 @@ struct interrupt_event
 	uint32_t int_no, err_code; // push byte #, our IDT table
 	uint32_t eip, cs, eflags, useresp, ss; // Pushed by processor automatically
 };
+
+
+typedef void (*interrupt_handler)(struct interrupt_event *event);
 
 
 /** [ ASM ]

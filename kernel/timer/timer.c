@@ -6,7 +6,7 @@
 #define CPU_FREQUENCY 1193180
 #define CPU_HZ        100
 
-int ticks = 0;
+volatile uint32_t ticks = 0;
 
 void set_frequency(int hz)
 {
@@ -19,6 +19,16 @@ void set_frequency(int hz)
 void time_handler(struct interrupt_event *event)
 {
 	ticks++; // TODO: Handle processes
+}
+
+void timer_wait(uint32_t towait)
+{
+	uint32_t eticks;
+	eticks = ticks + towait;
+	while (ticks < eticks)
+	{
+		__asm__ __volatile__ ("sti//hlt//cli");
+	}
 }
 
 void init_timer()

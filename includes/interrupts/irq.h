@@ -3,7 +3,8 @@
 #define __IRQ_H 1
 #include "idt.h"
 
-typedef void (*irq_function)(struct interrupt_event *event);
+#include "interrupts/idt.h"
+
 
 void init_irq();
 
@@ -12,7 +13,7 @@ void init_irq();
  * irq     - IRQ the handler is for
  * handler - The handler function that will handle the IRQ
  */
-void irq_install(int irq, irq_function handler);
+void irq_install(int irq, interrupt_handler handler);
 
 /**
  * Unregister an IRQ

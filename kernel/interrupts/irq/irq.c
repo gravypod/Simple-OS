@@ -5,7 +5,7 @@
 #include "system.h"
 #include "terminal.h"
 
-irq_function irqs[16] =
+interrupt_handler irqs[16] =
 {
 	0, 0, 0, 0,
 	0, 0, 0, 0,
@@ -13,7 +13,7 @@ irq_function irqs[16] =
 	0, 0, 0, 0
 };
 
-void irq_install(int irq, irq_function handler)
+void irq_install(int irq, interrupt_handler handler)
 {
 	irqs[irq] = handler;
 }
@@ -65,14 +65,14 @@ void init_irq()
 	
 }
 
-irq_function irq_get_handler(int irq)
+interrupt_handler irq_get_handler(int irq)
 {
 	return irqs[irq];
 }
 
 void irq_handler(struct interrupt_event *event)
 {
-	irq_function handler = irq_get_handler(event->int_no - 32);
+	interrupt_handler handler = irq_get_handler(event->int_no - 32);
 
 	if (handler != 0)
 	{

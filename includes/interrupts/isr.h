@@ -8,6 +8,9 @@
  */
 void isr_handler(struct interrupt_event *error); 
 
+void isr_install(uint8_t num, interrupt_handler handler);
+
+void isr_uninstall(uint8_t num);
 
 /**
  * Init the ISRs

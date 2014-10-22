@@ -4,6 +4,14 @@
 #include "interrupts/idt.h"
 #include "terminal.h"
 
+interrupt_handler handlers[32] =
+{
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0
+};
+
 unsigned char *error_messages[] = 
 {
 	"Division By Zero Exception",
@@ -42,9 +50,17 @@ unsigned char *error_messages[] =
 
 void isr_handler(struct interrupt_event *error)
 {
-	if (error->int_no < 32)
+	if (error->int_no > 32)
 	{
 		return;
+	}
+
+
+	interrupt_handler handler = handlers[error->int_no];
+
+	if (handler != 0)
+	{
+		handler(error);
 	}
 
 	terminal_putstring(error_messages[error->int_no]);
@@ -57,6 +73,15 @@ void isr_register(uint8_t num, uint64_t base)
 	idt_set_gate(num, base, KERNEL_SEGMENT, INTERRUPT_FLAG);
 }
 
+void isr_install(uint8_t num, interrupt_handler handler)
+{
+	handlers[num] = handler;
+}
+
+void isr_uninstall(uint8_t num)
+{
+	handlers[num] = 0;
+}
 
 void init_isr()
 {

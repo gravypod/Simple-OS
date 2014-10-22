@@ -5,6 +5,7 @@ SECTIONS
   .text : {
     *(.multiboot)
     *(.text);
+    *(.rodata)
     *(.bootstrap_stack)
   }
   .data : {
