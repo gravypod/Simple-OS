@@ -27,7 +27,9 @@ void timer_wait(uint32_t towait)
 	eticks = ticks + towait;
 	while (ticks < eticks)
 	{
-		__asm__ __volatile__ ("sti//hlt//cli");
+		__asm__ __volatile__ ("sti");
+		__asm__ __volatile__ ("hlt");
+		__asm__ __volatile__ ("cli");
 	}
 }
 
