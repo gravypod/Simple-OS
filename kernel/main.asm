@@ -11,18 +11,12 @@ align 4
 	dd FLAGS
 	dd CHECKSUM
 
-section .bss
-align 4
-	stack_bottom:
-	resb 16384
-	stack_top:
-
 section .text
 	global _start
 	_start:
-		
-		mov esp, stack_top
-	
+
+		mov esp, 0x7BFF
+
 		extern kernel_main
 		call kernel_main
 		jmp $
