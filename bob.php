@@ -13,7 +13,7 @@
 	function bob_build($build_dir="build")
 	{
 		create_constant("BUILD_DIR", get_real_path($build_dir));
-		
+
 		check_build_dir();
 
 		$target = isset($argv[1]) ? "target_" . $argv[1] : "target_default"; // Find target and if none were specified in arguments use default
@@ -73,7 +73,7 @@
 	{
 		global $files_changed; // Files that have been compiled during lifetime
 		if (file_exists($output) && !$files_changed) // If the output does not exist and...
-		{														 // if we ahve compiled nothing
+		{					 // if we ahve compiled nothing
 			log_info("Link was unneeded. No changes made"); // Nothing needed
 		}
 		else
@@ -104,7 +104,7 @@
 	/**
 	 * Get all of the object files from the build directory
 	 * returns - All built object files
-	 */ 
+	 */
 	function get_all_objects()
 	{
 		return glob(BUILD_DIR . "*.o");
@@ -119,16 +119,16 @@
 	{
 		$output_file = get_object_name($source_file); // Get the object name
 		$source_time = filemtime($source_file); // Source file last modified
-		
-		if (file_exists($output_file) && has_file_changed($output_file, $source_time)) // Should we compile the code?
+
+		if (file_exists($output_file) && !has_file_changed($output_file, $source_time)) // Should we compile the code?
 		{
 			return null;
 		}
-		
+
 		log_info("Compiling $source_file -> $output_file");
 		log_exec("$compiler $flags -o $output_file $source_file");
 
-		if (file_exists($output_file)) 
+		if (file_exists($output_file))
 		{
 			touch($output_file, $source_time); // Set modified time to that of the source. Dont mess with IDEs and allow us to tell if we need to compile
 		}
@@ -150,11 +150,11 @@
 	function compile_all($dir, $ext, $recursive, $compiler, $flags)
 	{
 		global $files_changed;
-		$pattern = get_real_path($dir) . "*." . $ext; 
+		$pattern = get_real_path($dir) . "*." . $ext;
 		$files = $recursive ? glob_recursive($pattern) : glob($pattern); // Find files
 
-		log_info("Matching all files to $pattern"); 
-		
+		log_info("Matching all files to $pattern");
+
 		foreach ($files as $file)
 		{
 			$of = compile($compiler, $flags, $file); // Compile file
@@ -166,7 +166,7 @@
 	}
 
 	/**
-	 * Get a path to a folder. 
+	 * Get a path to a folder.
 	 * A DIRECTORY_SEPARATOR is appended to the end.
 	 * $path - The path to be sanitized
 	 * returns - Sanatized path name
@@ -183,7 +183,7 @@
 	 */
 	function get_object_name($file)
 	{
-		return get_real_path(BUILD_DIR) . basename($file) . ".o"; 
+		return get_real_path(BUILD_DIR) . basename($file) . ".o";
 	}
 
 	/**
@@ -204,7 +204,7 @@
 	 * Get the date in a human readable format.
 	 * returns - Year-Month-Day Hours:Min:Sec
 	 */
-	function get_date() 
+	function get_date()
 	{
 		return date("Y-m-d H:i:s");
 	}
@@ -244,7 +244,7 @@
 	 * Log an info message to the console
 	 * $message - The message to output.
 	 */
-	function log_info($message) 
+	function log_info($message)
 	{
 		log_message("info", $message);
 	}
@@ -269,9 +269,9 @@
 		$return_var = 0;
 
 		log_message("command", "Executing ($command)");
-		
+
 		exec($command, $output, $return_var);
-		
+
 		log_message("command", $output); // Foward STD out to the user
 
 		return $return_var;
@@ -280,7 +280,7 @@
 	// Does not support flag GLOB_BRACE
 	function glob_recursive($pattern, $flags = 0)
 	{
-		$files = glob($pattern, $flags); 
+		$files = glob($pattern, $flags);
 		foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
 			$files = array_merge($files, glob_recursive($dir.'/'.basename($pattern), $flags));
 		}
