@@ -6,27 +6,26 @@
 #include "interrupts/irq.h"
 #include "timer/timer.h"
 #include "keyboard/keyboard.h"
-#include "memory/paging.h"
 
 
 void kernel_main()
 {
 
 	init_terminal();
+
+	terminal_putstring("Building GDT\n");
 	init_gdt();
+
+	terminal_putstring("Loading Interrupts\n");
 	init_idt();
-    init_isr();
-    init_irq();
+	init_isr();
+	init_irq();
 
-	//init_paging(); TODO: Fix paging
-    
-    //terminal_putstring("Testing faults\n");
+	terminal_putstring("Initializing timer\n");
+	init_timer();
 
-    //uint32_t *ptr = (uint32_t*) 0xA0000000;
-    //uint32_t do_page_fault = *ptr;
 
-    init_timer();
+	terminal_putstring("Initializing Interrupts\n");
 	init_keyboard();
-    enable_interrupts();
-
+	enable_interrupts();
 }
