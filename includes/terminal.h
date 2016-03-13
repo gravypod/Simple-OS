@@ -111,4 +111,6 @@ void terminal_colored_putchar(char c, uint8_t color);
  */
 void terminal_colored_putstring(const char* data, uint8_t color);
 
+void terminal_putdec(const unsigned number);
+
 #endif

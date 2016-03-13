@@ -5,8 +5,7 @@
 void init_terminal()
 {
 	terminal.row = 0; // Start at top left
-	terminal.column = 0;
-	terminal.buffer = (uint16_t*) VIDEO_MEMORY_LOCATION;
+	terminal.column = 0;	terminal.buffer = (uint16_t*) VIDEO_MEMORY_LOCATION;
 	terminal.color = make_terminal_color(WHITE, BLACK);
 
 	for (uint8_t y = 0; y < VGA_HEIGHT; y++)
@@ -89,17 +88,13 @@ void terminal_colored_putchar(char c, uint8_t color)
 			break;
 		default:
 			terminal.buffer[get_current_screen_index()] = make_colored_vga_entry(c, color);
-			
 			if (++terminal.column == VGA_WIDTH)
 			{
-				
 				terminal.column = 0;
-				
 				if (++terminal.row == VGA_HEIGHT)
 				{
 					terminal.row = 0;
 				}
-				
 			}
 			break;
 	}
@@ -123,5 +118,19 @@ void terminal_putchar(char c)
 void terminal_putstring(const char* data)
 {
 	terminal_colored_putstring(data, terminal.color);
+}
+
+void terminal_putdec(const unsigned number)
+{
+	unsigned reserved = 0;
+
+	for (unsigned tmp = number; tmp > 0; tmp /= 10) {
+		reserved = (reserved * 10) + tmp % 10;
+	}
+
+	for (unsigned tmp = reserved; tmp > 0; tmp /= 10) {
+		terminal_putchar('0' + (tmp % 10));
+	}
+
 }
 

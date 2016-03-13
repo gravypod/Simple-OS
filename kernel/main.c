@@ -21,9 +21,13 @@ void kernel_main()
 	init_isr();
 	init_irq();
 
+	u32int_t number = 102;
+	terminal_putstring("Printing 102: ");
+	terminal_putdec(number);
+	terminal_putstring("\n");
+
 	terminal_putstring("Initializing timer\n");
 	init_timer();
-
 
 	terminal_putstring("Initializing Interrupts\n");
 	init_keyboard();
