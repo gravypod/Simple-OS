@@ -6,7 +6,7 @@
 #include "interrupts/irq.h"
 #include "timer/timer.h"
 #include "keyboard/keyboard.h"
-
+#include "memory/memory.h"
 
 void kernel_main()
 {
@@ -21,7 +21,7 @@ void kernel_main()
 	init_isr();
 	init_irq();
 
-	u32int_t number = 102;
+	uint32_t number = 102;
 	terminal_putstring("Printing 102: ");
 	terminal_putdec(number);
 	terminal_putstring("\n");

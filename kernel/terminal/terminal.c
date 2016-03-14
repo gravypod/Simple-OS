@@ -70,19 +70,19 @@ void terminal_colored_putchar(char c, uint8_t color)
 
 	switch (c)
 	{
-	/*	case '\b': // Backspace TODO: Implement better terminall class... apperentlly
+		/*case '\b': // Backspace TODO: Implement better terminall class... apperentlly
 			if (terminal.column == 0)
 			{
 				terminal.row--;
 				terminal.column = VGA_WIDTH;
-			} 
-			else 
+			}
+			else
 			{
 				terminal.column -= 2;
 			}
 			terminal_colored_putchar(' ', color);
 			break;*/
-		case '\n': // 
+		case '\n': //
 			++terminal.row;
 			terminal.column = 0;
 			break;
@@ -131,6 +131,4 @@ void terminal_putdec(const unsigned number)
 	for (unsigned tmp = reserved; tmp > 0; tmp /= 10) {
 		terminal_putchar('0' + (tmp % 10));
 	}
-
 }
-
