@@ -10,13 +10,13 @@
 	 * Main entry point for the build script
 	 * $build_dir - The directory to dump all of our objects into.
 	 */
-	function bob_build($build_dir="build")
+	function bob_build($args, $build_dir="build")
 	{
 		create_constant("BUILD_DIR", get_real_path($build_dir));
 
 		check_build_dir();
 
-		$target = isset($argv[1]) ? "target_" . $argv[1] : "target_default"; // Find target and if none were specified in arguments use default
+		$target = isset($args[1]) ? "target_" . $args[1] : "target_default"; // Find target and if none were specified in arguments use default
 
 		if (!function_exists($target)) { // Validate that our build target is here
 			log_error("$target was not found!");
