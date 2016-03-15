@@ -1,3 +1,4 @@
+#include "multiboot.h"
 #include "system.h"
 #include "terminal.h"
 #include "gdt.h"
@@ -8,10 +9,16 @@
 #include "keyboard/keyboard.h"
 #include "memory/memory.h"
 
-void kernel_main()
+void kernel_main(uint64_t magic, multiboot_info_t* multiboot)
 {
 
 	init_terminal();
+
+	if (magic != MULTIBOOT_BOOTLOADER_MAGIC)
+	{
+		terminal_putstring("Multiboot failure detected!");
+		return;
+	}
 
 	terminal_putstring("Building GDT\n");
 	init_gdt();

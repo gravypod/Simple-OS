@@ -17,6 +17,9 @@ section .text
 
 		mov esp, 0x7BFF
 
+		push ebx
+		push eax
+
 		extern kernel_main
 		call kernel_main
 		jmp $
