@@ -25,8 +25,17 @@
 		link_all("ld", "kernel.bin", "-m elf_i386 -T link.ld");
 	}
 
+	function target_clean()
+	{
+		if (BUILD_DIR !== "/") {
+			log_info("Cleaning build directory: " . BUILD_DIR);
+			log_exec("rm -r " . BUILD_DIR . " && mkdir " . BUILD_DIR);
+		}
+	}
+
 	function target_debug() 
 	{
+		target_clean();
 		target_compile(true);
 		log_info("To begin debugging run \"$./debug_qemu.sh\"");
 	}
