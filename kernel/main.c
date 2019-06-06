@@ -20,6 +20,13 @@ void kernel_main(uint64_t magic, multiboot_info_t* multiboot)
 		return;
 	}
 
+	char *data = 0;
+
+	data[0] = 'c';
+	data[1] = 0;
+
+	terminal_putstring(data);
+
 	terminal_putstring("Building GDT\n");
 	init_gdt();
 
